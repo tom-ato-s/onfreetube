@@ -1,0 +1,51 @@
+package com.jdbs;
+
+
+import com.mysql.cj.jdbc.Driver;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class main {
+
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "12TomatO_=";
+    private static final String URL1 = "jdbc:mysql://localhost:3306/onfreetube?useSSL=false";
+
+    public static void main(String[] args) throws SQLException {
+        Connection connection = null;
+        Driver driver;
+
+        try {
+            driver =new com.mysql.cj.jdbc.Driver();
+        }
+        catch(SQLException ex) {
+            System.out.println("Произошла ошибка при создании драйвкра");
+            return;
+        }
+        try {
+            DriverManager.registerDriver(driver);
+        }
+        catch (SQLException ex) {
+            System.out.println("Неудалось зарегистрировать драйвер");
+            return;}
+
+        try{
+            connection = DriverManager.getConnection(URL1, USERNAME, PASSWORD);
+
+            System.out.println("code....");
+        }
+        catch(SQLException ex) {
+            System.out.println("НЕУДАЛОСЬ СОЗДАТЬ СОЕДИНЕНИЕ");
+            return; }
+        finally {
+            if(connection != null) {
+                connection.close();
+            }
+        }
+
+    }
+
+
+    }
