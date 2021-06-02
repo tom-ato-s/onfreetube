@@ -17,6 +17,15 @@ public class main {
         Connection conn =  db.getConnection(URL1, USERNAME, PASSWORD);
         String query = "select * from onfreetube.products";
 
+
+        String INSERT = "insert into onfreetube.products (product_name, price, shop_id) value (?, ?, ?)";
+        PreparedStatement prepInsert = conn.prepareStatement(INSERT);
+        prepInsert.setString(1,"Ege");
+        prepInsert.setDouble(2,9.9);
+        prepInsert.setInt(3, 1);
+        prepInsert.execute();
+
+
         PreparedStatement prepStat = conn.prepareStatement(query);                              //запрос вводится в память PreparedStatement и может повторяться много раз подняд на разных значениях
         ResultSet resSet = prepStat.executeQuery();
 
