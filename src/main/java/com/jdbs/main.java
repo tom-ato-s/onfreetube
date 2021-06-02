@@ -15,26 +15,16 @@ public class main {
     public static void main(String[] args) throws SQLException {
         DBProcessor db = new DBProcessor();                  // класс, который даст нам соединение
         Connection conn =  db.getConnection(URL1, USERNAME, PASSWORD);
-        String query = "select * from onfreetube.products where product_id = 7";                                       // без where product_id = 7 - выводится вся таблица
-        Statement statement = conn.createStatement();  // для выполнения запроса
-        ResultSet resSet = statement.executeQuery(query);    // выполнение sql команды эта для выполения запросов
+        String query = "select * from onfreetube.products";
 
-        while (resSet.next()) { //next() - если имеется следуующий после счетчика элемент то             // вывод того что имеется в таблице Products
-            int id;
-            String name;
-            Double price;
-            int shopId;
-            id = resSet.getInt("product_id");
-            name = resSet.getString("product_name");
-            price = resSet.getDouble("price");
-            shopId = resSet.getInt("shop_id");
-            Product product = new Product(id, name, price, shopId);
-            System.out.println(product);
+        PreparedStatement prepStat = conn.prepareStatement(query);                              //запрос вводится в память PreparedStatement и может повторяться много раз подняд на разных значениях
+        ResultSet resSet = prepStat.executeQuery();
 
+        while (resSet.next()) {
+            System.out.println(resSet.getInt("product_id") + " " + resSet.getString("product_name"));
         }
-        statement.close();
+        prepStat.close();
         conn.close();
-
 
     }
 }
